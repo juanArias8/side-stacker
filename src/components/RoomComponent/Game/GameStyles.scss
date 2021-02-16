@@ -1,0 +1,38 @@
+@import "src/index";
+
+.game-container {
+  flex: 80;
+  padding-top: 10px;
+  padding-left: 50px;
+  box-sizing: border-box;
+
+  @include mobile {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .board-form {
+    display: flex;
+    margin-bottom: 20px;
+
+    @include mobile {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .input-container {
+      max-width: 100px;
+      margin-right: 20px;
+
+      @include mobile {
+        max-width: 80%;
+      }
+    }
+
+    .buttons-container {
+      height: 100%;
+      margin-top: 10px;
+    }
+  }
+}

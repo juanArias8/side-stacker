@@ -1,0 +1,91 @@
+$primary-color: #1976d2;
+$accent-color: #512da8;
+$gray-color: #e0e0e0;
+$border: 1px solid black;
+
+$phone-media-query: "(min-width: 320px) and (max-width: 767px)";
+
+@mixin mobile {
+  @media #{$phone-media-query} {
+    @content;
+  }
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("assets/fonts/Ubuntu-L.ttf");
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+* {
+  font-family: 'Ubuntu', serif;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $primary-color;
+}
+
+%button {
+  height: 35px;
+  width: auto;
+  min-width: 100px;
+  color: black;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.btn-primary {
+  @extend %button;
+  background-color: $primary-color;
+
+  &:hover {
+    background-color: white;
+    border: 1px solid $primary-color;
+  }
+}
+
+.btn-secondary {
+  @extend %button;
+  background-color: $accent-color;
+
+  &:hover {
+    background-color: white;
+    border: 1px solid $accent-color;
+  }
+}
+
+
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  input {
+    height: 30px;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: 1px solid $gray-color;
+  }
+
+  small {
+    color: red;
+  }
+}
+
+

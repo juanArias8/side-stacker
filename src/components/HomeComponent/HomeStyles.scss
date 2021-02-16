@@ -1,0 +1,84 @@
+@import "src/index";
+
+.home-container {
+  margin: 0;
+  padding: 0 10% 0 10%;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    color: $primary-color;
+  }
+
+  p {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  @include mobile {
+    flex-direction: column;
+  }
+
+  .home-info {
+    padding: 20px;
+    display: flex;
+
+    @include mobile {
+      width: 100vw;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    img {
+      max-width: 350px;
+      max-height: 350px;
+
+      @include mobile {
+        max-width: 250px;
+      }
+    }
+
+    .home-actions {
+      margin-left: 50px;
+      width: 30vw;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+
+      @include mobile {
+        width: 80vw;
+        margin: 20px 0 0 0;
+        padding: 0;
+      }
+
+      .options {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .create-form, .join-form {
+        width: 100%;
+
+        .input-container {
+          margin-bottom: 15px;
+        }
+
+        .buttons-container {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+
+          button {
+            width: 45%;
+          }
+        }
+      }
+    }
+  }
+}
