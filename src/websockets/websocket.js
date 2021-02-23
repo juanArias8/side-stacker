@@ -1,6 +1,6 @@
 import React, {createContext} from 'react'
 import {useDispatch} from "react-redux"
-import {updateRoomBoard} from "../redux/actions"
+import {updateRoom} from "../redux/actions"
 import {WS_URL} from "../utils/config";
 
 const WebSocketContext = createContext(null)
@@ -20,8 +20,7 @@ export default ({children}) => {
 
         socket.onmessage = function (event) {
             const payload = JSON.parse(event.data)
-            console.log(typeof payload)
-            dispatch(updateRoomBoard(payload))
+            dispatch(updateRoom(payload.data))
         }
 
         socket.onclose = function (event) {
@@ -31,7 +30,7 @@ export default ({children}) => {
 
     const sendMessage = (message) => {
         socket.send(JSON.stringify(message))
-        dispatch(updateRoomBoard(message))
+        dispatch(updateRoom(message))
     }
 
     ws = {

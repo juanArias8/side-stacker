@@ -1,4 +1,4 @@
-import {JOIN_ROOM_SUCCESS, SET_NEXT, SET_SYMBOL, SET_USERNAME, UPDATE_ROOM, UPDATE_ROOM_BOARD} from "./actions";
+import {SET_SYMBOL, SET_USERNAME, UPDATE_ROOM} from "./actions";
 
 const initialState = {
     room: {
@@ -13,7 +13,7 @@ const initialState = {
     symbol: ''
 }
 
-const chatReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_ROOM:
             return {...state, room: action.payload}
@@ -21,21 +21,12 @@ const chatReducer = (state = initialState, action) => {
         case SET_SYMBOL:
             return {...state, symbol: action.payload}
 
-        case JOIN_ROOM_SUCCESS:
-            return {...state, room: action.payload}
-
-        case UPDATE_ROOM_BOARD:
-            return {...state, room: action.payload}
-
         case SET_USERNAME:
             return {...state, user: action.payload}
-
-        case SET_NEXT:
-            return {...state, next: action.payload}
 
         default:
             return state
     }
 }
 
-export default chatReducer
+export default rootReducer

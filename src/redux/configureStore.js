@@ -1,12 +1,12 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import chatReducer from "./reducer";
-
+import rootReducer from "./reducer";
+import loggerMiddleware from './logger'
 
 export default function configureStore(preloadedState) {
-    // const middlewares = [loggerMiddleware, thunkMiddleware]
-    // const middlewareEnhancer = applyMiddleware(...middlewares)
-    const middlewareEnhancer = applyMiddleware(thunkMiddleware)
+    const middlewares = [loggerMiddleware, thunkMiddleware]
+    const middlewareEnhancer = applyMiddleware(...middlewares)
+    // const middlewareEnhancer = applyMiddleware(thunkMiddleware)
     const composedEnhancers = compose(middlewareEnhancer)
-    return createStore(chatReducer, preloadedState, composedEnhancers)
+    return createStore(rootReducer, preloadedState, composedEnhancers)
 }
