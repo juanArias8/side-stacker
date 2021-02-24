@@ -8,6 +8,7 @@ export const HomeComponent = () => {
     const [option, setOption] = useState(null)
     const [roomName, setRoomName] = useState('')
     const [userName, setUserName] = useState('')
+    const [againstBoot, setAgainstBoot] = useState(false)
     const currentRoom = useSelector((state) => state.room)
     const dispatch = useDispatch()
 
@@ -27,7 +28,7 @@ export const HomeComponent = () => {
         )
     }
 
-    const renderForm = () => {
+    const renderCommonInputs = () => {
         return (
             <div className='form'>
                 <div className="input-container">
@@ -45,18 +46,30 @@ export const HomeComponent = () => {
         )
     }
 
+    const renderCheckbox = () => {
+        return (
+            <div className="input-container checkbox">
+                <label htmlFor="boot">
+                    <input id="boot" type='checkbox' defaultChecked={againstBoot}
+                           onChange={() => setAgainstBoot(!againstBoot)}/> Play against boot
+                </label>
+            </div>
+        )
+    }
+
     const renderCreateForm = () => {
         return (
             <div className='create-form'>
                 <h2>Create new room</h2>
-                {renderForm()}
+                {renderCommonInputs()}
+                {renderCheckbox()}
                 <div className="buttons-container">
                     <button className="btn-secondary"
                             onClick={() => setOption(null)}>Cancel
                     </button>
 
                     <button className="btn-primary"
-                            onClick={() => dispatch(createRoom(roomName, userName))}>Create
+                            onClick={() => dispatch(createRoom(roomName, userName, againstBoot))}>Create
                     </button>
                 </div>
             </div>
@@ -67,7 +80,7 @@ export const HomeComponent = () => {
         return (
             <div className='join-form'>
                 <h2>Join existing room</h2>
-                {renderForm()}
+                {renderCommonInputs()}
                 <div className="buttons-container">
                     <button className="btn-secondary"
                             onClick={() => setOption(null)}>Cancel
@@ -95,9 +108,9 @@ export const HomeComponent = () => {
                 <img src={image} alt="Home image"/>
 
                 <div className="home-actions">
-                    {!currentRoom.name && !option ? renderOptions() : null}
-                    {!currentRoom.name && option === 'create' ? renderCreateForm() : null}
-                    {!currentRoom.name && option === 'join' ? renderJoinForm() : null}
+                    {!currentRoom?.name && !option ? renderOptions() : null}
+                    {!currentRoom?.name && option === 'create' ? renderCreateForm() : null}
+                    {!currentRoom?.name && option === 'join' ? renderJoinForm() : null}
                 </div>
             </div>
         </div>

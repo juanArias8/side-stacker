@@ -1,18 +1,21 @@
 import React, {useContext, useEffect} from 'react'
 import {useSelector} from 'react-redux'
-import {WebSocketContext} from '../../../websockets/websocket';
-import {GameComponent} from "../Game/GameComponent";
-import {RoomInfoComponent} from "../RoomInfo/RoomInfoComponent";
-import "./Player1Styles.scss"
+import {WebSocketContext} from '../../websockets/websocket';
+import {GameComponent} from "./Game/GameComponent";
+import {RoomInfoComponent} from "./RoomInfo/RoomInfoComponent";
+import "./RoomStyles.scss"
 
-export const Player1Component = () => {
+export const RoomComponent = () => {
     const room = useSelector(state => state.room)
+    const user = useSelector(state => state.user)
     const ws = useContext(WebSocketContext)
 
     useEffect(() => {
-        ws.connectPlayer(room.name, 1, room.user_1)
-        if (!room.user_1) window.location = '/'
-    }, [])
+        ws.connectPlayer(room.name, user)
+        if (!room || !room.name) {
+            window.location = '/'
+        }
+    }, [room, user, ws])
 
     const sendMessage = (message) => {
         ws.sendMessage(message)

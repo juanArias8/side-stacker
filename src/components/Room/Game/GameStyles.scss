@@ -1,4 +1,4 @@
-@import "src/index";
+@import "../../../index";
 
 .game-container {
   flex: 80;
@@ -9,6 +9,11 @@
   @include mobile {
     text-align: center;
     padding: 20px;
+  }
+
+  .game-over {
+    display: flex;
+    align-items: center;
   }
 
   .board-form {

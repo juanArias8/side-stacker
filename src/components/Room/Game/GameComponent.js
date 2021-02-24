@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {updateRoom} from "../../../redux/actions";
+import {useSelector} from "react-redux";
 import {BoardComponent} from "./Board/BoardComponent";
 import "./GameStyles.scss"
 
@@ -13,17 +12,17 @@ export const GameComponent = ({sendMessage}) => {
     const room = useSelector(state => state.room)
     const user = useSelector(state => state.user)
     const symbol = useSelector(state => state.symbol)
-    const dispatch = useDispatch()
 
-    const sendData = () => {
-        const newRoom = {...room, board: getNewBoard(), next: getNextPlayer()}
-        dispatch(updateRoom(newRoom))
+    const handlePlay = () => {
+        const newRoom = {...room, board: getNewBoard()}
         sendMessage(newRoom)
+        setMoveRowInput('')
+        setMoveSenseInput('')
     }
 
     const setMoveRowValue = (value) => {
         value = parseInt(value)
-        if (value < 1 || moveRowInput > 7) {
+        if (value < 1 || value > 7) {
             setMoveRowInput('')
             setMoveRowError('invalid')
         } else {
@@ -64,8 +63,9 @@ export const GameComponent = ({sendMessage}) => {
         return board
     }
 
-    const getNextPlayer = () => {
-        return user === room.user_1 ? room.user_2 : room.user_1
+    const handlePlayAgain = () => {
+        const newRoom = {...room, board: [], winner: null}
+        sendMessage(newRoom)
     }
 
     const renderForm = () => {
@@ -73,7 +73,7 @@ export const GameComponent = ({sendMessage}) => {
             <div className="board-form">
                 <div className="input-container">
                     <label htmlFor="row">* Row [1-7]</label>
-                    <input id="row" type='number' min='1' max='7' value={moveRowInput}
+                    <input id="row" type='text' minLength='1' maxLength='1' value={moveRowInput}
                            onChange={event => setMoveRowValue(event.target.value)}/>
                     {moveRowError ? <small>{moveRowError}</small> : null}
                 </div>
@@ -87,7 +87,7 @@ export const GameComponent = ({sendMessage}) => {
 
                 <div className="buttons-container">
                     {moveRowInput && moveSenseInput
-                        ? <button className="btn-primary" onClick={() => sendData()}>Play </button>
+                        ? <button className="btn-primary" onClick={() => handlePlay()}>Play </button>
                         : null
                     }
                 </div>
@@ -95,13 +95,22 @@ export const GameComponent = ({sendMessage}) => {
         )
     }
 
+    const renderGameOver = () => {
+        return <div className="game-over">
+            <p>Game over</p>
+            <button className="btn-primary" onClick={() => handlePlayAgain()}>Play again</button>
+        </div>
+    }
+
     return (
         <div className="game-container">
             <h2>Board game</h2>
-            {room && room.user_1 && room.user_2 && !room.winner && room.next === user
-                ? renderForm()
-                : <p>Waiting for move ...</p>
-            }
+            {room && room.winner ? renderGameOver() : null}
+            {room && room.boot && room.player_2.name === user ? <p>Guest mode</p> : null}
+            {room && room.player_1 && !room.player_2 ? <p>Waiting for player 2</p> : null}
+            {room && !room.player_1 && room.player_2 ? <p>Player 1 disconnected</p> : null}
+            {room && !room.winner && room.next !== user ? <p>Waiting for move</p> : null}
+            {room && !room.winner && room.next === user ? renderForm() : null}
             {room && room.board ? <BoardComponent/> : null}
         </div>
     )

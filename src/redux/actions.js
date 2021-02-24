@@ -28,19 +28,23 @@ export const setUser = (username) => {
     }
 }
 
-export const createRoom = (roomName, userName) => {
+export const createRoom = (roomName, userName, boot) => {
+    const player_2 = boot ? 'boot' : null;
     return async function (dispatch) {
         try {
             const data = {
                 name: roomName,
-                user_1: userName
+                player_1: {name: userName},
+                player_2: {name: player_2},
+                next: userName,
+                boot: boot
             }
-            const response = await axios.post(`${API_URL}/rooms/`, data)
+            const response = await axios.post(`${API_URL}/rooms`, data)
             console.log(response.data)
             dispatch(updateRoom(response.data))
-            dispatch(setUser(response.data.user_1))
+            dispatch(setUser(userName))
             dispatch(setSymbol('x'))
-            window.location = '/#/room/1'
+            window.location = '/#/room'
         } catch (error) {
             alert("error creating the room, try another name")
         }
@@ -52,14 +56,14 @@ export const joinRoom = (roomName, userName) => {
         try {
             const data = {
                 name: roomName,
-                user_2: userName
+                player_2: {name: userName}
             }
             const response = await axios.post(`${API_URL}/rooms/join`, data)
             console.log(response.data)
             dispatch(updateRoom(response.data))
-            dispatch(setUser(response.data.user_2))
+            dispatch(setUser(userName))
             dispatch(setSymbol('o'))
-            window.location = '/#/room/2'
+            window.location = '/#/room'
         } catch (error) {
             alert("error joining the room, try another name")
         }

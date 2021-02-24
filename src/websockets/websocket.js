@@ -13,24 +13,26 @@ export default ({children}) => {
 
     const dispatch = useDispatch()
 
-    const connectPlayer = (roomName, playerNumber, userName) => {
+    const connectPlayer = (roomName, userName) => {
+        console.log(roomName, userName)
         if (!socket) {
-            socket = new WebSocket(`${WS_URL}/${roomName}/${playerNumber}/${userName}`)
+            socket = new WebSocket(`${WS_URL}/${roomName}/${userName}`)
         }
 
         socket.onmessage = function (event) {
             const payload = JSON.parse(event.data)
-            dispatch(updateRoom(payload.data))
+            console.log(payload)
+            dispatch(updateRoom(payload))
         }
 
         socket.onclose = function (event) {
-            console.log(event.data)
+            alert('Connection not available, leaving the room')
+            window.location('/')
         }
     }
 
     const sendMessage = (message) => {
         socket.send(JSON.stringify(message))
-        dispatch(updateRoom(message))
     }
 
     ws = {

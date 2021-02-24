@@ -3,8 +3,8 @@ import {SET_SYMBOL, SET_USERNAME, UPDATE_ROOM} from "./actions";
 const initialState = {
     room: {
         name: null,
-        user_1: null,
-        user_2: null,
+        player_1: null,
+        player_2: null,
         next: null,
         winner: null,
         board: []

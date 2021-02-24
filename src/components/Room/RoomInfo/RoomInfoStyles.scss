@@ -1,4 +1,4 @@
-@import "src/index";
+@import "../../../index";
 
 .room-info-container {
   width: 20vw;
@@ -16,11 +16,13 @@
 
   .winner-container {
     width: calc(100% - 20px);
-    background-color: green;
+    background-color: #4caf50;
     padding: 20px;
     border-radius: 5px;
     box-sizing: border-box;
     box-shadow: 1px 1px 1px $gray-color;
+    display: flex;
+    justify-content: center;
   }
 
   button {
