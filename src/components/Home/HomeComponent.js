@@ -12,12 +12,6 @@ export const HomeComponent = () => {
     const currentRoom = useSelector((state) => state.room)
     const dispatch = useDispatch()
 
-    console.log(currentRoom)
-
-    useEffect(() => {
-        console.log(currentRoom)
-    }, [currentRoom])
-
     const renderOptions = () => {
         return (
             <div className='options'>

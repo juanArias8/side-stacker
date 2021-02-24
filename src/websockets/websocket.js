@@ -14,14 +14,12 @@ export default ({children}) => {
     const dispatch = useDispatch()
 
     const connectPlayer = (roomName, userName) => {
-        console.log(roomName, userName)
         if (!socket) {
             socket = new WebSocket(`${WS_URL}/${roomName}/${userName}`)
         }
 
         socket.onmessage = function (event) {
             const payload = JSON.parse(event.data)
-            console.log(payload)
             dispatch(updateRoom(payload))
         }
 

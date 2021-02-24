@@ -40,7 +40,6 @@ export const createRoom = (roomName, userName, boot) => {
                 boot: boot
             }
             const response = await axios.post(`${API_URL}/rooms`, data)
-            console.log(response.data)
             dispatch(updateRoom(response.data))
             dispatch(setUser(userName))
             dispatch(setSymbol('x'))
@@ -59,7 +58,6 @@ export const joinRoom = (roomName, userName) => {
                 player_2: {name: userName}
             }
             const response = await axios.post(`${API_URL}/rooms/join`, data)
-            console.log(response.data)
             dispatch(updateRoom(response.data))
             dispatch(setUser(userName))
             dispatch(setSymbol('o'))
