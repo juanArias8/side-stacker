@@ -107,8 +107,8 @@ export const GameComponent = ({sendMessage}) => {
             <h2>Board game</h2>
             {room && room.winner ? renderGameOver() : null}
             {room && room.boot && room.player_2.name === user ? <p>Guest mode</p> : null}
-            {room && room.player_1 && !room.player_2 ? <p>Waiting for player 2</p> : null}
-            {room && !room.player_1 && room.player_2 ? <p>Player 1 disconnected</p> : null}
+            {room && room.player_1?.name && !room.player_2?.name ? <p>Waiting for player 2</p> : null}
+            {room && !room.player_1?.name && room.player_2?.name ? <p>Player 1 disconnected</p> : null}
             {room && !room.winner && room.next !== user ? <p>Waiting for move</p> : null}
             {room && !room.winner && room.next === user ? renderForm() : null}
             {room && room.board ? <BoardComponent/> : null}
